@@ -8,10 +8,14 @@ public class ProducerConfig {
 	private int port;
 	private ISerializtion serialization;
 	private int retryAttempts;
+	private int producerMaxIdleTimeInSeconds;
 
 	public ProducerConfig(String ipaddress, int port) {
 		this.ipaddress = ipaddress;
 		this.port = port;
+		this.retryAttempts = 3;
+		this.producerMaxIdleTimeInSeconds = 120;
+		
 	}
 
 	public String getIpaddress() {
@@ -45,5 +49,15 @@ public class ProducerConfig {
 	public void setRetryAttempts(int retryAttempts) {
 		this.retryAttempts = retryAttempts;
 	}
+
+	public int getProducerMaxIdleTimeInSeconds() {
+		return producerMaxIdleTimeInSeconds;
+	}
+
+	public void setProducerMaxIdleTimeInSeconds(int producerMaxIdleTimeInSeconds) {
+		this.producerMaxIdleTimeInSeconds = producerMaxIdleTimeInSeconds;
+	}
+	
+	
 
 }

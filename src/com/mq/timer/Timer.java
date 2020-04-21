@@ -121,7 +121,6 @@ public class Timer extends Thread {
 
 				while (!tc.stop && !tc.resetFlag) {
 					tc.counter++;
-					log.error(""+tc.counter);
 					if (ct != null && !ct.notificationFlag && ct.notificationCondition.test(tc.counter)) {
 						synchronized (ct.callerThread) {
 							ct.notificationFlag = true;

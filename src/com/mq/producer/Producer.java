@@ -9,11 +9,10 @@ import com.mq.monitor.Monitoring;
 public class Producer extends Monitoring {
 
 	private Logger log = new Logger(Producer.class);
-	private static final int WAITING_TIME = 2 * 60;
 	private RecordAccumulator accumulator;
 
 	public Producer(ProducerConfig prop) throws ConnectException {
-		super(Producer.class.getSimpleName(), (Predicate<Integer>) (Integer t) -> t > WAITING_TIME);
+		super(Producer.class.getSimpleName(), (Predicate<Integer>) (Integer t) -> t > prop.getProducerMaxIdleTimeInSeconds());
 		log.info("Starting Producer");
 		start();
 		this.accumulator = new RecordAccumulator(prop);
@@ -24,6 +23,7 @@ public class Producer extends Monitoring {
 		if (isClosed() || isStopped()) {
 			throw new RuntimeException("Producer : is not running ...");
 		}
+		log.info("New data received");
 		accumulator.send(record);
 		reset();
 	}

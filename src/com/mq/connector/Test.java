@@ -10,7 +10,7 @@ import com.mq.serialize.Serialize;
 public class Test {
 
 	public static void main(String[] args) throws Exception {
-		ProducerConfig pc = new ProducerConfig("192.168.1.18", 58460);
+		ProducerConfig pc = new ProducerConfig("192.168.1.18", 59570);
 		ISerializtion s = new Serialize();
 		pc.setSerialization(s);
 		Producer p = new Producer(pc);
