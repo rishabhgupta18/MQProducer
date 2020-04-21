@@ -10,7 +10,10 @@ import com.mq.serialize.Serialize;
 public class Test {
 
 	public static void main(String[] args) throws Exception {
-		ProducerConfig pc = new ProducerConfig("192.168.1.18", 59570);
+	
+		String ipAddress = "";//enter ip provided by MQServer
+		int port = 8080; // enter port provided by MQServer
+		ProducerConfig pc = new ProducerConfig(ipAddress, port);
 		ISerializtion s = new Serialize();
 		pc.setSerialization(s);
 		Producer p = new Producer(pc);
