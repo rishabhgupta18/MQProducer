@@ -1,12 +1,9 @@
 package com.mq.producer;
 
-import com.mq.serialize.ISerializtion;
-
 public class ProducerConfig {
 
 	private String ipaddress;
 	private int port;
-	private ISerializtion serialization;
 	private int retryAttempts;
 	private int producerMaxIdleTimeInSeconds;
 
@@ -32,14 +29,6 @@ public class ProducerConfig {
 
 	public void setPort(int port) {
 		this.port = port;
-	}
-
-	public ISerializtion getSerialization() {
-		return serialization;
-	}
-
-	public void setSerialization(ISerializtion serialization) {
-		this.serialization = serialization;
 	}
 
 	public int getRetryAttempts() {

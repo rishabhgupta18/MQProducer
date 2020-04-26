@@ -13,6 +13,7 @@ import java.util.function.Predicate;
 import com.mq.connector.Sender;
 import com.mq.logger.Logger;
 import com.mq.monitor.Monitoring;
+import com.mq.topic.Topic;
 
 public class RecordAccumulator extends Monitoring {
 

@@ -1,16 +1,15 @@
 package com.mq.serialize;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 
-public class Deserialize implements IDeserializtion{
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-	public Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
+public class Deserialize implements IDeserializtion {
 
-		ByteArrayInputStream in = new ByteArrayInputStream(data);
-		ObjectInputStream is = new ObjectInputStream(in);
-		return is.readObject();
+	public Object deserialize(String data, Class<? extends Object> c) throws IOException, ClassNotFoundException {
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readValue(data, c);
+
 	}
 
 }

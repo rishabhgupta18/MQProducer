@@ -1,25 +1,27 @@
-package com.mq.producer;
+package com.mq.topic;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public final class Topic implements Cloneable, Serializable {
+public final class Topic implements Cloneable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private final int id;
+	@JsonIgnore
+	private int id;
+	@JsonProperty("key")
 	private String key;
 
-	public Topic(String key) {
+	@JsonCreator
+	public Topic(@JsonProperty("key") String key) {
 		this.key = key;
 		this.id = key.hashCode();
 	}
-
+	
 	public int getId() {
 		return id;
 	}
 
+	@JsonProperty("key")
 	public String getKey() {
 		return key;
 	}

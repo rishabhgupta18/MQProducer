@@ -23,7 +23,7 @@ public class Producer extends Monitoring {
 		if (isClosed() || isStopped()) {
 			throw new RuntimeException("Producer : is not running ...");
 		}
-		log.info("New data received");
+		log.info("Send request for new data received");
 		accumulator.send(record);
 		reset();
 	}
@@ -39,7 +39,8 @@ public class Producer extends Monitoring {
 		if (!isClosed()) {
 			super.close();
 			log.info("stopping");
-			accumulator.close();
+			if(accumulator != null)
+				accumulator.close();
 			log.info("stopped");
 		} else {
 			log.info("Producer is not running");

@@ -1,7 +1,7 @@
 package com.mq.connector;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -15,6 +15,7 @@ import com.mq.logger.Logger;
 import com.mq.producer.ProducerConfig;
 import com.mq.producer.ProducerRecord;
 import com.mq.serialize.ISerializtion;
+import com.mq.serialize.Serialize;
 
 public class Sender {
 
@@ -40,6 +41,7 @@ public class Sender {
 				throw new RuntimeException(
 						"Unable to connect to MQ Server. IP is null " + "[" + prop.getIpaddress() + "]");
 			try {
+				log.info("Connecting to IP["+prop.getIpaddress()+"], port["+prop.getPort()+"]");
 				socket = new Socket();
 				socket.connect(new InetSocketAddress(prop.getIpaddress(), prop.getPort()), 5000);
 				return;
@@ -61,18 +63,21 @@ public class Sender {
 	public void send(List<ProducerRecord> records) {
 
 		pool.execute(() -> {
-			PrintWriter out = null;
-			ISerializtion serialize = prop.getSerialization();
+			DataOutputStream out = null;
+			ISerializtion serialize = new Serialize();
 			try {
-				out = new PrintWriter(this.socket.getOutputStream(), true);
-				out.println(serialize.serialize(records));
+				out = new DataOutputStream(this.socket.getOutputStream());
+				out.writeUTF(serialize.serialize(records));
 				out.flush();
 			} catch (Exception e) {
-				e.printStackTrace();
-				System.err.println("Error occurred while transferring to Server ::: " + e.getMessage());
+				log.error("Error occurred while transferring to Server ::: " + e.getMessage());
 			} finally {
 				if (out != null)
-					out.close();
+					try {
+						out.close();
+					} catch (IOException e) {
+						log.error("Exception while closing the output stream");
+					}
 			}
 			// retry
 			int retryAttempts = prop.getRetryAttempts();
