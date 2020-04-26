@@ -67,7 +67,7 @@ public class Sender {
 			ISerializtion serialize = new Serialize();
 			try {
 				out = new DataOutputStream(this.socket.getOutputStream());
-				out.writeUTF(serialize.serialize(records));
+				out.writeUTF(serialize.serializeString(records));
 				out.flush();
 			} catch (Exception e) {
 				log.error("Error occurred while transferring to Server ::: " + e.getMessage());

@@ -36,7 +36,7 @@ public class Test {
 					exit = true;
 				} else {
 					ProducerRecord r = new ProducerRecord(new Topic("Test_t1"));
-					r.setData(s.serialize(input));
+					r.setData(s.serializeString(input));
 					p.send(r);
 				}
 			}
